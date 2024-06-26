@@ -6,7 +6,7 @@ const app = express();
 
 //CONEXIONES Y RUTAS
 const connectDB = require('./config/db');//conexión a la bd
-
+const adminRouter = require('./routes/adminRoutes');
 
 app.use(morgan('combined')); //Uso de morgan
 
@@ -14,13 +14,16 @@ require('dotenv').config(); //Lectura de variables de entorno
 
 app.use(express.json());
 
-
 //CONFIGURACIÓN DE CORS
 app.use(cors({
     origin: 'https://localhost:3000',
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+//RUTAS
+app.use('/admin', adminRouter);
+
 
 // CONEXIÓN A BD
 connectDB(); 
