@@ -1,10 +1,13 @@
 const express = require('express');
 const { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } = require('../controllers/productController');
 const { uploadImage, getImages } = require('../controllers/imageController');
+const { login } = require('../controllers/authController');
 const upload = require('../middlewares/multer');
 const adminRouter = express.Router();
 // const  require('../middleware/;
 
+//Login
+adminRouter.post('/login', login);
 
 //PRODUCTOS
 adminRouter.get('/products', getAllProducts); // Obtener todos los productos

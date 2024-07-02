@@ -23,6 +23,7 @@ app.use(cors({
 }));
 
 //RUTAS
+app.use('/auth', adminRouter);
 app.use('/admin', adminRouter);
 
 // Manejar errores de multer
