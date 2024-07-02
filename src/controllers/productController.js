@@ -1,11 +1,38 @@
 const Product = require('../models/Product');
+const cloudinary = require('../config/cloudinary');
 
 // Crear un nuevo producto
-const createProduct = async (req, res) => {
+/* const createProduct = async (req, res) => {
   try {
     const product = new Product(req.body);
     await product.save();
     res.status(201).json({message: 'Producto creado exitosamente', producto: product});
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+}; */
+
+const createProduct = async (req, res) => {
+  try {
+    const { nombre, stock, precio, promocion, categoria, descripcion, talle } = req.body;
+    let imagenes = [];
+
+    if (req.files) {
+      const uploadPromises = req.files.map(file => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream((error, result) => {
+            if (error) return reject(error);
+            resolve(result.secure_url);
+          }).end(file.buffer);
+        });
+      });
+
+      imagenes = await Promise.all(uploadPromises);
+    }
+
+    const product = new Product({ nombre, stock, precio, promocion, categoria, descripcion, talle, imagenes });
+    await product.save();
+    res.status(201).json({ message: 'Producto creado exitosamente', producto: product });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
