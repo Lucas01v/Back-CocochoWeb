@@ -8,6 +8,7 @@ const app = express();
 //CONEXIONES Y RUTAS
 const connectDB = require('./config/db');//conexión a la bd
 const adminRouter = require('./routes/adminRoutes');
+const userRouter = require('./routes/userRoutes');
 
 app.use(morgan('combined')); //Uso de morgan
 
@@ -25,6 +26,7 @@ app.use(cors({
 //RUTAS
 app.use('/auth', adminRouter);
 app.use('/admin', adminRouter);
+app.use('/user', userRouter)
 
 // Manejar errores de multer
 app.use((err, req, res, next) => {
