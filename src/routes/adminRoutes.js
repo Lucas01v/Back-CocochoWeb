@@ -3,7 +3,7 @@ const { getAllProducts, getProductById, createProduct, updateProduct, deleteProd
 const { uploadImage, getImages } = require('../controllers/imageController');
 const { login } = require('../controllers/authController');
 const upload = require('../middlewares/multer');
-const { getSubscribers } = require('../controllers/suscriberController');
+const { getSubscribers, addSubscriber } = require('../controllers/suscriberController');
 const adminRouter = express.Router();
 // const  require('../middleware/;
 
@@ -24,5 +24,6 @@ adminRouter.post('/images/upload', upload.single('image'), uploadImage); //Carga
 
 //NEWSLETTER
 adminRouter.get('/newsletter', getSubscribers); //Listar suscriptores
+adminRouter.post('/newsletter/suscribe', addSubscriber );
 
 module.exports = adminRouter;
