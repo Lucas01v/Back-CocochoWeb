@@ -2,8 +2,9 @@ const express = require('express');
 const { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } = require('../controllers/productController');
 const { uploadImage, getImages } = require('../controllers/imageController');
 const upload = require('../middlewares/multer');
+const getProductsByCarousel = require('../controllers/carruselController');
 const adminRouter = express.Router();
-// const  require('../middleware/;
+
 
 
 //PRODUCTOS
@@ -14,8 +15,11 @@ adminRouter.post('/products/create', upload.array('imagenes', 2), createProduct)
 adminRouter.patch('/products/update/:id', updateProduct); // Actualizar un producto por ID
 adminRouter.delete('/products/delete/:id', deleteProduct); // Eliminar un producto por ID
 
-//IMÁGENES
+//CARRUSEL DE IMÁGENES
 adminRouter.get('/images', getImages); //Listar imágenes
 adminRouter.post('/images/upload', upload.single('image'), uploadImage); //Cargar imágen
+
+//CARRUSELES DE PRODUCTOS
+adminRouter.get('/products/carousel/:type', getProductsByCarousel); //Acturalziar productos del carrusel
 
 module.exports = adminRouter;
