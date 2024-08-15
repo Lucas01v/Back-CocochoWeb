@@ -64,11 +64,36 @@ const getProductById = async (req, res) => {
 // Actualizar un producto por ID
 const updateProduct = async (req, res) => {
   try {
-    const product = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    const { nombre, stock, precio, promocion, categoria, descripcion, talle } = req.body;
+    let imagenes = [];
+
+    if (req.files) {
+      const uploadPromises = req.files.map(file => {
+        return new Promise((resolve, reject) => {
+          cloudinary.uploader.upload_stream((error, result) => {
+            if (error) return reject(error);
+            resolve(result.secure_url);
+          }).end(file.buffer);
+        });
+      });
+
+      imagenes = await Promise.all(uploadPromises);
+    }
+
+    const updatedProductData = { nombre, stock, precio, promocion, categoria, descripcion, talle };
+    
+    // Solo agregar imágenes si se han subido nuevas
+    if (imagenes.length > 0) {
+      updatedProductData.imagenes = imagenes;
+    }
+
+    const product = await Product.findByIdAndUpdate(req.params.id, updatedProductData, { new: true, runValidators: true });
+
     if (!product) {
       return res.status(404).json({ message: 'Producto no encontrado' });
     }
-    res.status(200).json(product);
+
+    res.status(200).json({ message: 'Producto actualizado exitosamente', producto: product });
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
