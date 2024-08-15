@@ -12,7 +12,7 @@ adminRouter.get('/products', getAllProducts); // Obtener todos los productos
 adminRouter.get('/products/:id', getProductById); // Obtener un producto por ID
 // adminRouter.post('/products/create', createProduct); // Crear un nuevo producto
 adminRouter.post('/products/create', upload.array('imagenes', 2), createProduct); // Crear un nuevo producto
-adminRouter.patch('/products/update/:id', updateProduct); // Actualizar un producto por ID
+adminRouter.patch('/products/update/:id',upload.array('imagenes', 2),  updateProduct); // Actualizar un producto por ID
 adminRouter.delete('/products/delete/:id', deleteProduct); // Eliminar un producto por ID
 
 //CARRUSEL DE IMÁGENES
