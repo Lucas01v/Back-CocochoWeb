@@ -10,6 +10,7 @@ const productSchema = new mongoose.Schema({
   descripcion: {type: String, required: true},
   talle: {type: String, required: true},
   imagenes: [{type: String, required: true}],
+  carousel: [{type: String, enum: ['featured', 'seasonal', 'offer', 'null'], default: null}]
 }, {timestamps: true});
 
 module.exports = mongoose.model('Product', productSchema);

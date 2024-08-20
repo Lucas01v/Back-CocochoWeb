@@ -8,6 +8,8 @@ const app = express();
 //CONEXIONES Y RUTAS
 const connectDB = require('./config/db');//conexión a la bd
 const adminRouter = require('./routes/adminRoutes');
+const bodyParser = require('body-parser');
+// const userRouter = require('./routes/userRoutes');
 
 app.use(morgan('combined')); //Uso de morgan
 
@@ -17,14 +19,17 @@ app.use(express.json());
 
 //CONFIGURACIÓN DE CORS
 app.use(cors({
-    origin: 'https://localhost:3000',
+    origin: 'http://localhost:5173',
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //RUTAS
 app.use('/auth', adminRouter);
 app.use('/admin', adminRouter);
+// app.use('/user', userRouter);
 
 // Manejar errores de multer
 app.use((err, req, res, next) => {
@@ -39,8 +44,10 @@ app.use((err, req, res, next) => {
 // CONEXIÓN A BD
 connectDB(); 
 
-    // Iniciar el servidor
+// Aumentar el tiempo de espera de la solicitud
 const PORT = process.env.PORT;
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+const server = app.listen(process.env.PORT || 5000, () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
+
+server.setTimeout(2 * 60 * 1000); //Tiempo de espera
