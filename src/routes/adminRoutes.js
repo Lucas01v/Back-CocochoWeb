@@ -1,6 +1,6 @@
 const express = require('express');
 const { getAllProducts, getProductById, createProduct, updateProduct, deleteProduct } = require('../controllers/productController');
-const { uploadImage, getImages } = require('../controllers/imageController');
+const { uploadImage, getImages, updateImage } = require('../controllers/imageController');
 const upload = require('../middlewares/multer');
 const getProductsByCarousel = require('../controllers/carruselController');
 const adminRouter = express.Router();
@@ -17,7 +17,7 @@ adminRouter.delete('/products/delete/:id', deleteProduct); // Eliminar un produc
 
 //CARRUSEL DE IMÁGENES
 adminRouter.get('/images', getImages); //Listar imágenes
-adminRouter.post('/images/upload', upload.single('image'), uploadImage); //Cargar imágen
+adminRouter.put('/images/:id', upload.single('image'), updateImage); //Cargar imágen
 
 //CARRUSELES DE PRODUCTOS
 adminRouter.get('/products/carousel/:type', getProductsByCarousel); //Acturalziar productos del carrusel
