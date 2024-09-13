@@ -64,7 +64,7 @@ const getProductById = async (req, res) => {
 // Actualizar un producto por ID
 const updateProduct = async (req, res) => {
   try {
-    const { nombre, stock, precio, promocion, categoria, descripcion, talle } = req.body;
+    const { nombre, stock, precio, promocion, categoria, descripcion, talle, carousel } = req.body;
     let imagenes = [];
 
     if (req.files) {
@@ -80,7 +80,7 @@ const updateProduct = async (req, res) => {
       imagenes = await Promise.all(uploadPromises);
     }
 
-    const updatedProductData = { nombre, stock, precio, promocion, categoria, descripcion, talle };
+    const updatedProductData = { nombre, stock, precio, promocion, categoria, descripcion, talle, carousel };
     
     // Solo agregar imágenes si se han subido nuevas
     if (imagenes.length > 0) {
