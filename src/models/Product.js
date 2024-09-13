@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
   promocion: {type: Number, default: 0},
   categoria: {type: String, required: true},
   descripcion: {type: String, required: true},
-  talle: {type: String, required: true},
+  talle: [{type: String}],
   imagenes: [{type: String, required: true}],
   carousel: [{type: String, enum: ['featured', 'seasonal', 'offer', 'null'], default: null}]
 }, {timestamps: true});
