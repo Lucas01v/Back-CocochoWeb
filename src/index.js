@@ -9,6 +9,7 @@ const app = express();
 const connectDB = require('./config/db');//conexión a la bd
 const adminRouter = require('./routes/adminRoutes');
 const bodyParser = require('body-parser');
+const orderRouter = require('./routes/orderRoutes');
 // const userRouter = require('./routes/userRoutes');
 
 app.use(morgan('combined')); //Uso de morgan
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //RUTAS
 app.use('/auth', adminRouter);
 app.use('/admin', adminRouter);
+app.use('/order', orderRouter )
 // app.use('/user', userRouter);
 
 // Manejar errores de multer
