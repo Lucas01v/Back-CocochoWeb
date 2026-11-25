@@ -20,7 +20,7 @@ app.use(express.json());
 
 //CONFIGURACIÓN DE CORS
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://705f-181-80-25-70.ngrok-free.app', 'https://cocochoweb.vercel.app', 'https://www.cocochoweb.store'],
+    origin: ['http://localhost:5000','http://localhost:5173', 'https://705f-181-80-25-70.ngrok-free.app', 'https://cocochoweb.vercel.app', 'https://www.cocochoweb.store'],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
